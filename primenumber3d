@@ -1,0 +1,61 @@
+package training;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class primenumber3d {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the max number to check for 3D prime numbers: ");
+        int max = sc.nextInt();
+        sc.close();
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for (int current = 2; current <= max; current++) {
+            if (isPrime(current)) {
+                int digitSum = sumOfDigits(current);
+                int digitCount = countDigits(current);
+
+                // Debug print (optional)
+                System.out.println("Checking: " + current + " | Digits: " + digitCount + " | Sum: " + digitSum);
+
+                if (isPrime(digitSum) && isPrime(digitCount)) {
+                    list.add(current);
+                }
+            }
+        }
+
+        System.out.println("3D Prime Numbers up to " + max + ":");
+        System.out.println(list);
+    }
+
+    // Prime checker
+    public static boolean isPrime(int n) {
+        if (n <= 1) return false;
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+
+    // Sum of digits
+    public static int sumOfDigits(int n) {
+        int sum = 0;
+        while (n != 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
+    }
+
+    // Count number of digits
+    public static int countDigits(int n) {
+        int count = 0;
+        while (n != 0) {
+            n /= 10;
+            count++;
+        }
+        return count;
+    }
+}

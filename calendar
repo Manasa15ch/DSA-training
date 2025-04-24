@@ -1,0 +1,80 @@
+package training;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.format.TextStyle;
+import java.util.Locale;
+import java.util.Scanner;
+
+public class calendar {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1) Full year calendar printing
+        System.out.print("Enter the year: ");
+        int yearInput = scanner.nextInt();
+
+        printYearCalendar(yearInput);
+
+        // 2) Print April 2025 calendar
+        System.out.println("\nCalendar for April 2025:");
+        printMonthCalendar(2025, 4);
+
+        // 3) Leap-year check
+        boolean isLeap2025 = Year.isLeap(2025);
+        System.out.println("\nIs 2025 a leap year? " + isLeap2025);
+
+        // 4) Weekday for April 24, 2025
+        LocalDate date = LocalDate.of(2025, 4, 24);
+        DayOfWeek dow = date.getDayOfWeek();
+        // Full uppercase name (e.g. "THURSDAY")
+        System.out.println("\nDay of week for 2025-04-24: " 
+            + dow.getDisplayName(TextStyle.FULL, Locale.ENGLISH).toUpperCase()
+        );
+
+        // 5) Difference between May 15, 2005 and April 24, 2025
+        LocalDate d1 = LocalDate.of(2005, 5, 15);
+        LocalDate d2 = LocalDate.of(2025, 4, 24);
+        long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(d1, d2);
+        System.out.println("\nDays between " + d1 + " and " + d2 + ": " + daysBetween);
+
+        scanner.close();
+    }
+
+    // Helper to print a month’s calendar
+    private static void printMonthCalendar(int year, int month) {
+        java.time.format.DateTimeFormatter headerFmt =
+            java.time.format.DateTimeFormatter.ofPattern("MMMM yyyy");
+        LocalDate first = LocalDate.of(year, month, 1);
+        System.out.printf("     %s%n", first.format(headerFmt));
+        System.out.println("Mo Tu We Th Fr Sa Su");
+
+        // Determine the day of week of the 1st (1=Monday ... 7=Sunday)
+        int indent = first.getDayOfWeek().getValue() % 7; 
+        // (we use %7 so Sunday (7) becomes indent 0 at line start)
+
+        // Print leading spaces
+        for (int i = 0; i < indent; i++) {
+            System.out.print("   ");
+        }
+
+        int length = first.lengthOfMonth();
+        for (int day = 1; day <= length; day++) {
+            System.out.printf("%2d ", day);
+            indent++;
+            if (indent % 7 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
+    // Helper to print an entire year
+    private static void printYearCalendar(int year) {
+        for (int month = 1; month <= 12; month++) {
+            printMonthCalendar(year, month);
+            System.out.println();
+        }
+    }
+}

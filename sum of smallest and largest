@@ -1,0 +1,47 @@
+package training;
+import java.util.Scanner;
+
+
+public class accenture {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter numbers");
+        // Input three integers
+        int A = scanner.nextInt();
+        int B = scanner.nextInt();
+        int C = scanner.nextInt();
+
+        // Calculate sum of largest and smallest digits from all numbers
+        int a1 = big(A) + big(B) + big(C);
+        int a2 = small(A) + small(B) + small(C);
+
+        int val = a1 + a2;
+        System.out.println(val);
+    }
+
+    // Method to find the largest digit in a number
+    public static int big(int n) {
+        int maxDigit = 0;
+        while (n > 0) {
+            int digit = n % 10;
+            if (digit > maxDigit) {
+                maxDigit = digit;
+            }
+            n /= 10;
+        }
+        return maxDigit;
+    }
+
+    // Method to find the smallest digit in a number
+    public static int small(int n) {
+        int minDigit = 9;
+        while (n > 0) {
+            int digit = n % 10;
+            if (digit < minDigit) {
+                minDigit = digit;
+            }
+            n /= 10;
+        }
+        return minDigit;
+    }
+}

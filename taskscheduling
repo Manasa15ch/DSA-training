@@ -1,0 +1,38 @@
+package training;
+
+import java.util.*;
+
+public class validparenthesis {
+    public boolean isValid(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+        Map<Character, Character> brackets = new HashMap<>();
+        brackets.put(')', '(');
+        brackets.put('}', '{');
+        brackets.put(']', '[');
+
+        for (char ch : s.toCharArray()) {
+            // If it's an opening bracket, push onto stack
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            } 
+            else {
+                // If it's a closing bracket:
+                // 1) stack must not be empty
+                // 2) top of stack must match the corresponding opening
+                if (stack.isEmpty() || stack.pop() != brackets.get(ch)) {
+                    return false;
+                }
+            }
+        }
+        // All characters processed, string is valid if stack is empty
+        return stack.isEmpty();
+    }
+
+    // Simple test
+    public static void main(String[] args) {
+        validparenthesis sol = new validparenthesis();
+        System.out.println(sol.isValid("[]{}")); // true
+        System.out.println(sol.isValid("([)]")); // false
+        System.out.println(sol.isValid("{[()()]}")); // true
+    }
+}

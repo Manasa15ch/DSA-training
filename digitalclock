@@ -1,0 +1,34 @@
+package training;
+
+public class digitalclock {
+    public static void main(String[] args) throws InterruptedException {
+        int h = 0, m = 0, s = 0;
+
+        while (true) {
+            // Format the time
+            String time = String.format("%02d : %02d : %02d", h, m, s);
+
+            // Print on the same line using carriage return (\r)
+            System.out.print("\r" + time);
+            System.out.flush();
+
+            Thread.sleep(1000); // Sleep for 1 second
+
+            // Update time
+            s++;
+            if (s == 60) {
+                s = 0;
+                m++;
+            }
+            if (m == 60) {
+                m = 0;
+                h++;
+            }
+            if (h == 12) {
+                h = 0;
+                m = 0;
+                s = 0;
+            }
+        }
+    }
+}

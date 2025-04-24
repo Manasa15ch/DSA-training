@@ -1,0 +1,68 @@
+package training;
+
+import java.util.*;
+
+public class evaluatingmathematicalexpression {
+    public static int evaluate(String s) {
+        List<Integer> nums = new ArrayList<>();
+        List<Character> symbol = new ArrayList<>();
+        
+        int i = 0, n = s.length();
+        while (i < n) {
+            char c = s.charAt(i);
+            
+            if (Character.isWhitespace(c)) {
+                // skip spaces if any
+                i++;
+            }
+            else if (Character.isDigit(c)) {
+                // parse full (multi-digit) number
+                int num = 0;
+                while (i < n && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + (s.charAt(i) - '0');
+                    i++;
+                }
+                nums.add(num);
+            }
+            else {
+                // operator: apply any with >= precedence first
+                while (!symbol.isEmpty() && precedence(symbol.get(symbol.size()-1)) >= precedence(c)) {
+                    applyOp(nums, symbol.remove(symbol.size()-1));
+                }
+                symbol.add(c);
+                i++;
+            }
+        }
+        // apply remaining operators
+        while (!symbol.isEmpty()) {
+            applyOp(nums, symbol.remove(symbol.size()-1));
+        }
+        // result is the last (and only) number
+        return nums.get(0);
+    }
+
+    private static int precedence(char op) {
+        if (op == '+' || op == '-') return 1;
+        if (op == '*' || op == '/') return 2;
+        return 0;
+    }
+
+    private static void applyOp(List<Integer> nums, char op) {
+        int b = nums.remove(nums.size()-1);
+        int a = nums.remove(nums.size()-1);
+        int res;
+        switch (op) {
+            case '+': res = a + b; break;
+            case '-': res = a - b; break;
+            case '*': res = a * b; break;
+            case '/': res = a / b; break;  // integer division
+            default: throw new IllegalArgumentException("Unknown op: " + op);
+        }
+        nums.add(res);
+    }
+
+    public static void main(String[] args) {
+        String expr = "10+2/3+4-2";
+        System.out.println(evaluate(expr));  // now prints 12
+    }
+}

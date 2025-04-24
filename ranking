@@ -1,0 +1,45 @@
+package training;
+
+import java.util.*;
+
+class Student {
+    String name;
+    int age;
+    int[] marks;
+
+    Student(String name, int age, int[] marks) {
+        this.name = name;
+        this.age = age;
+        this.marks = marks;
+    }
+
+    double getPercentage() {
+        int total = 0;
+        for (int mark : marks) {
+            total += mark;
+        }
+        return total / 4.0;
+    }
+}
+
+public class ranking {
+
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("raju", 23, new int[]{45, 50, 40, 60}));
+        students.add(new Student("rose", 12, new int[]{75, 85, 80, 90}));
+        students.add(new Student("ravi", 53, new int[]{65, 70, 60, 80}));
+        students.add(new Student("jack", 22, new int[]{55, 75, 65, 70}));
+
+        // Sort students by percentage in descending order
+        students.sort((s1, s2) -> Double.compare(s2.getPercentage(), s1.getPercentage()));
+
+        String[] positions = {"First", "SECOND", "THIRD", "FOURTH"};
+
+        for (int i = 0; i < students.size(); i++) {
+            Student s = students.get(i);
+            System.out.printf("%s has score %.2f %% ----> stands %s\n",
+                    s.name, s.getPercentage(), positions[i]);
+        }
+    }
+}

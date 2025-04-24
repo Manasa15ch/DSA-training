@@ -1,0 +1,123 @@
+package training;
+
+public class linkedlistimplementation {
+    private static class Node {
+        int data;
+        Node next;
+
+        Node(int val) {
+            data = val;
+            next = null;
+        }
+    }
+
+    private Node head;
+
+    public linkedlistimplementation() {
+        head = null;
+    }
+
+    // Insert at end
+    public void insert(int val) {
+        Node newNode = new Node(val);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+        System.out.println(val + " is successfully inserted");
+    }
+
+    // Insert at position (0-based). If pos <= 0 or list empty: insert at head
+    // If pos > length: append at end
+    public void insertAtPos(int val, int pos) {
+        Node newNode = new Node(val);
+        // Insert at head
+        if (pos <= 0 || head == null) {
+            newNode.next = head;
+            head = newNode;
+            System.out.println(val + " inserted at position 0");
+            return;
+        }
+
+        Node temp = head;
+        int currentPos = 0;
+        // Move to node just before desired position
+        while (temp.next != null && currentPos < pos - 1) {
+            temp = temp.next;
+            currentPos++;
+        }
+        // Insert after temp
+        newNode.next = temp.next;
+        temp.next = newNode;
+        System.out.println(val + " inserted at position " + (currentPos + 1));
+    }
+
+    // Delete first occurrence of val
+    public void delete(int val) {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+        // If head to delete
+        if (head.data == val) {
+            head = head.next;
+            System.out.println(val + " is successfully deleted");
+            return;
+        }
+        Node prev = head;
+        Node curr = head.next;
+        while (curr != null && curr.data != val) {
+            prev = curr;
+            curr = curr.next;
+        }
+        if (curr == null) {
+            System.out.println(val + " not found in the list.");
+            return;
+        }
+        prev.next = curr.next;
+        System.out.println(val + " is successfully deleted");
+    }
+
+    // Display list
+    public void display() {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        Node temp = head;
+        while (temp != null) {
+            sb.append(temp.data);
+            if (temp.next != null) sb.append("--->");
+            temp = temp.next;
+        }
+        System.out.println(sb.toString());
+    }
+
+    // Demo
+    public static void main(String[] args) {
+        linkedlistimplementation l = new linkedlistimplementation();
+        l.insert(100);
+        l.insert(200);
+        l.insert(300);
+        l.insert(400);
+        l.display();               // 100--->200--->300--->400
+
+        l.insertAtPos(150, 1);
+        l.display();               // 100--->150--->200--->300--->400
+
+        l.insertAtPos(50, 0);
+        l.display();               // 50--->100--->150--->200--->300--->400
+
+        l.insertAtPos(500, 10);    // pos beyond length → append
+        l.display();               // 50--->100--->150--->200--->300--->400--->500
+
+        l.delete(200);
+        l.display();               // 50--->100--->150--->300--->400--->500
+    }
+}

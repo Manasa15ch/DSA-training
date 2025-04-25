@@ -1,0 +1,42 @@
+class rectangle:
+    def set_dim(self,l,b):
+        self.l=l
+        self.b=b
+    def area(self):
+        return self.l*self.b
+n=int(input("enter number of rectangle"))
+shape=[]
+for i in range(n):
+    r=rectangle()
+    l=int(input("enter length of rectangle {}".format(i+1)))
+    b=int(input("enter breadth of rectangle {}".format(i+1)))
+    r.set_dim(l,b)
+    shape.append(r)
+index=0
+for i in shape :
+    index=index+1
+    res=i.area()
+    print("Area of rectangle {} is {}".format(index,res))'''
+'''class student:
+    def set_marks(self,s1,s2,s3,s4):
+        self.s1=s1
+        self.s2=s2
+        self.s3=s3
+        self.s4=s4
+    def  percentage(self):
+        return (self.s1+self.s2+self.s3+self.s4)//4
+n=int(input("enter number of students"))
+svcet=[]
+for i in range(n):
+    s=student()
+    s1=int(input("enter marks of s1".format(i+1)));
+    s2=int(input("enter marks of s2".format(i+1)));
+    s3=int(input("enter marks of s3".format(i+1)));
+    s4=int(input("enter marks of s4".format(i+1)));
+    s.set_marks(s1,s2,s3,s4)
+    svcet.append(s)
+index=0
+for i in svcet:
+    index=index+1
+    res=i.percentage()
+    print("GPA of student {} is ".format(index,res))

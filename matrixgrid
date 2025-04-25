@@ -1,0 +1,28 @@
+import random
+
+rows = int(input("Enter number of rows: "))
+cols = int(input("Enter number of columns: "))
+if 
+
+while True:
+    g = [[random.randint(1, 20) for _ in range(cols)] for _ in range(rows)]
+    
+    outer_sum = 0
+    inner_sum = 0
+
+    for i in range(rows):
+        for j in range(cols):
+            if i == 0 or i == rows - 1 or j == 0 or j == cols - 1:
+                outer_sum += g[i][j]
+            else:
+                inner_sum += g[i][j]
+
+    if inner_sum == outer_sum:
+        print("Matrix:")
+        for row in g:
+            print(row)
+
+        print(f"\nInner Sum = {inner_sum}")
+        print(f"Outer Sum = {outer_sum}")
+        break
+

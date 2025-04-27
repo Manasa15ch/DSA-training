@@ -1,0 +1,20 @@
+public class MonkeyPuzzle {
+    public static int result(int x, int y, int z) {
+        int height = 0;
+        int minute = 0;
+
+        while (height < x) {
+            minute++;
+            if (minute % 2 != 0) {
+                height += y;
+            } else {
+                height -= z;
+            }
+        }
+        return minute;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(result(21, 5, 3));
+    }
+}
